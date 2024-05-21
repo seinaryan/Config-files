@@ -8,16 +8,20 @@ super + Return
 
 # program launcher
 super + d
-	dmenu_run
+	rofi -show drun
 
 # program launcher
 super + space
-	launcher
+	rofi -show filebrowser
 
 
 # make sxhkd reload its configuration files:
 super + Escape
 	pkill -USR1 -x sxhkd
+
+
+super + Tab
+	rofi -show window
 
 #
 # bspwm hotkeys
@@ -56,6 +60,7 @@ super + ctrl + {m,x,y,z}
 	bspc node -g {marked,locked,sticky,private}
 
 #
+
 # focus/swap
 #
 
@@ -76,8 +81,8 @@ super + bracket{left,right}
 	bspc desktop -f {prev,next}.local
 
 # focus the last node/desktop
-super + {grave,Tab}
-	bspc {node,desktop} -f last
+super + {grave}
+	bspc {node} -f last
 
 # focus the older or newer node in the focus history
 super + {o,i}
@@ -130,7 +135,7 @@ super + {Left,Down,Up,Right}
 super + Print
     scrot 'screenshot_%Y%m%d_%H%M%S.png' -e 'mkdir -p ~/screenshots && mv $f ~/screenshots && xclip -selection clipboard -t image/png -i ~/screenshots/`ls -1 -t ~/screenshots | head -1`'
 
-Shift + Print
+super + shift + Print
     scrot -s 'screenshot_%Y%m%d_%H%M%S.png' -e 'mkdir -p ~/screenshots && mv $f ~/screenshots && xclip -selection clipboard -t image/png -i ~/screenshots/`ls -1 -t ~/screenshots | head -1`'
 
 
@@ -140,8 +145,27 @@ Shift + Print
 
 
 
+super + {XF86AudioPrev, XF86AudioPlay, XF86AudioNext, XF86AudioStop}
+	mpc {prev, toggle, next, stop}
 
+{XF86AudioStop, XF86AudioPlay, XF86AudioPrev, XF86AudioNext}
+	playerctl {stop, play-pause, previous, next}
 
+{XF86AudioLowerVolume, XF86AudioRaiseVolume}
+  pactl set-sink-volume @DEFAULT_SINK@ {-5%, +5%}
+
+XF86AudioMute
+  pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+XF86MonBrightnessUp
+  brightnessctl set +10%
+
+XF86MonBrightnessDown
+  brightnessctl set 10%-
+ 
+
+shift + {Prior, Next}
+	xbacklight -{inc,dec} 5
 
 
 
